@@ -20,6 +20,10 @@ app.use(pino({
 }));
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Server is working!');
+});
+
 app.all('/{*splat}', (req, res, next) => {
     res.status(404).json({
         message: 'Not found'
