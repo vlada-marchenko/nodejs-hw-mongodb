@@ -21,7 +21,7 @@ app.use(pino({
 app.use(express.json());
 
 
-app.all( (req, res, next) => {
+app.all('*', (req, res, next) => {
     res.status(404).json({
         message: 'Not found'
     });
