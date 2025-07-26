@@ -26,7 +26,8 @@ const contactsSchema = new Schema({
 },
 {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
+    collection: 'contacts'
 });
 
-export const ContactCollection = model("Contacts", contactsSchema);
+export const ContactCollection = model("Contact", contactsSchema);
