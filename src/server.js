@@ -4,6 +4,8 @@ import cors from 'cors';
 import configDotenv from 'dotenv';
 import { getAllContacts, getContactById } from './services/contacts.js';
 import { getEnvVar } from './utils/getEnvVar.js';
+import mongoose from "mongoose";
+import { ContactCollection } from "./db/models/contact.js";
 
 configDotenv.config();
 
@@ -46,6 +48,17 @@ app.get('/contacts/:id', async (req, res) => {
     });
 
 
+});
+
+
+app.get("/__debug", async (req, res) => {
+  const info = {
+    db: mongoose.connection.name,
+    collections: (await mongoose.connection.db.listCollections().toArray()).map(c => c.name),
+    count: await ContactCollection.estimatedDocumentCount(),
+    sample: await ContactCollection.findOne().lean(),
+  };
+  res.json(info);
 });
 
 
