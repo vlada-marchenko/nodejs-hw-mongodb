@@ -20,25 +20,6 @@ app.use(pino({
 }));
 app.use(express.json());
 
-
-app.all('/{*splat}', (req, res, next) => {
-    res.status(404).json({
-        message: 'Not found'
-    });
-} );
-
-app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(500).json({
-        message: 'Internal server error',
-        error: err.message
-    });
-} );
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
 app.get('/contacts', async (req, res) => {
     const contacts = await getAllContacts();
 
@@ -66,5 +47,26 @@ app.get('/contacts/:id', async (req, res) => {
 
 
 });
+
+
+app.all('/{*splat}', (req, res, next) => {
+    res.status(404).json({
+        message: 'Not found'
+    });
+} );
+
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({
+        message: 'Internal server error',
+        error: err.message
+    });
+} );
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+
 };
 
