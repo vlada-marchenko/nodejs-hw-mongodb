@@ -1,17 +1,13 @@
 import dotenv from 'dotenv';
-
 dotenv.config();
 
-export const getEnvVar = (name, defaultValue ) => {
-    const value = process.env[name];
+export const getEnvVar = (name, defaultValue) => {
+  const raw = process.env[name];
+  const value = typeof raw === 'string' ? raw.trim() : raw;
 
-    if (value) {
-        return value;
-    } 
-    
-    if(defaultValue) {
-        return defaultValue;
-    }
+  if (value !== undefined && value !== '') return value;
 
-    throw new Error(`Environment variable ${name} is not set`);
+  if (defaultValue !== undefined) return defaultValue;
+
+  throw new Error(`Environment variable ${name} is not set`);
 };
