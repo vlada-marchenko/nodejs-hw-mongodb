@@ -1,6 +1,6 @@
-import { getAllContacts, getContactById } from './services/contacts.js';
+import { getAllContacts, getContactById } from '../services/contacts.js';
 import createHttpError from 'http-errors';
-import { createContact } from './services/contacts.js';
+import { createContact } from '../services/contacts.js';
 import { updateContact } from '../services/contacts.js';
 import { deleteContact } from '../services/contacts.js';
 

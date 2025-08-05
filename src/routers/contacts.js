@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getContactsController, getContactByIdController } from "../controllers/contacts";
+import { getContactsController, getContactByIdController } from "../controllers/contacts.js";
 import { errWrapper } from "../utils/errWrapper.js";
 import { createContactController } from "../controllers/contacts.js";
-import { updateContactController } from "../controllers/contacts";
+import { updateContactController } from "../controllers/contacts.js";
 import { deleteContactController } from "../controllers/contacts.js";
 
 const router = Router();

@@ -5,6 +5,7 @@ import configDotenv from 'dotenv';
 import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import contactsRouter from './routers/contacts.js';
 
 configDotenv.config();
 
@@ -12,7 +13,7 @@ const PORT = Number(getEnvVar('PORT')) || 3000;
 
 export const setUpServer = () => {
 const app = express();
-const studentRoutes = import('./routers/contacts.js');
+
 
 app.use(cors());
 app.use(pino({
@@ -22,7 +23,7 @@ app.use(pino({
 }));
 app.use(express.json());
 
-app.use(studentRoutes);
+app.use(`/contacts`, contactsRouter);
 
 app.all('/{*splat}', notFoundHandler);
 
