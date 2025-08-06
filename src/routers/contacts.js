@@ -7,14 +7,14 @@ import { deleteContactController } from "../controllers/contacts.js";
 
 const router = Router();
 
-router.get('/contacts', errWrapper(getContactsController));
+router.get('/', errWrapper(getContactsController));
 
-router.get('/contacts/:id', errWrapper(getContactByIdController));
+router.get('/:id', errWrapper(getContactByIdController));
 
-router.post('/contacts', errWrapper(createContactController));
+router.post('/', errWrapper(createContactController));
 
-router.patch('/contacts/:id', errWrapper(updateContactController));
+router.patch('/:id', errWrapper(updateContactController));
 
-router.delete('/contacts/:id', errWrapper(deleteContactController));
+router.delete('/:id', errWrapper(deleteContactController));
 
 export default router;
