@@ -25,7 +25,7 @@ app.use(express.json());
 
 app.use(`/contacts`, contactsRouter);
 
-app.all('/{*splat}', notFoundHandler);
+app.use(notFoundHandler);
 
 app.use(errorHandler);
 
