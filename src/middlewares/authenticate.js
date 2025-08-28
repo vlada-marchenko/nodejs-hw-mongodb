@@ -17,7 +17,7 @@ export const authenticate = async (req, res, next) => {
       return next(createHttpError(401, "Not authorized"));
     }
 
-    if (session.accessTokenValidUntil < new Date()) {
+    if (!session.accessTokenValidUntil || session.accessTokenValidUntil < new Date()) {
       return next(createHttpError(401, "Access token expired"));
     }
 
@@ -31,7 +31,8 @@ export const authenticate = async (req, res, next) => {
 
     next();
   } catch (error) {
-    error;
+
+    console.error("Authenticate error:", error);
     next(createHttpError(401, "Not authorized"));
   }
 };
