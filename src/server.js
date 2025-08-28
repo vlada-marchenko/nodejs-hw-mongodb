@@ -5,7 +5,8 @@ import configDotenv from 'dotenv';
 import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import contactsRouter from './routers/contacts.js';
+import router from './routers/index.js';
+import cookieParser from 'cookie-parser';
 
 configDotenv.config();
 
@@ -22,8 +23,9 @@ app.use(pino({
     }
 }));
 app.use(express.json());
+app.use(cookieParser());
 
-app.use(`/contacts`, contactsRouter);
+app.use(router);
 
 app.use(notFoundHandler);
 
