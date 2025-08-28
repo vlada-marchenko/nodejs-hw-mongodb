@@ -1,33 +1,24 @@
 import createHttpError from "http-errors";
-import { ROLES } from '../constants/index.js';
 import { ContactCollection } from "../db/models/contact.js";
 
 
-export const checkRoles = (...roles) => async (req, res, next) => {
+export const checkOwner = async (req, res, next) => {
     const { user } = req;
+    const { id } = req.params;
+
     if (!user) {
-        next(createHttpError(401));
+        next(createHttpError(401, 'Not authorized'));
         return;
     }
 
-    const { role } = user;
-    if (roles.includes(ROLES.USER) && role === ROLES.USER) {
-        const { userId } = req.params;
-        if (!userId) {
-            next(createHttpError(403));
-            return;
-        }
-
-        const contact = await ContactCollection.findOne({
-            _id: userId,
+    const contact = await ContactCollection.findOne({
+            _id: id,
             userId: user._id
-        });
+    });
 
-        if (contact) {
-            next();
-            return;
+    if (!contact) {
+            return next(createHttpError(403, 'Forbidden'));
         }
-    }
 
-    next(createHttpError(403));
+    next();
     };
