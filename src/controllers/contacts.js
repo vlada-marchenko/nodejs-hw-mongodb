@@ -5,6 +5,9 @@ import { updateContact } from '../services/contacts.js';
 import { deleteContact } from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 
 export const getContactsController = async (req, res) => {
@@ -67,6 +70,9 @@ export const createContactController = async (req, res) => {
 
 export const updateContactController = async (req, res) => {
     const { name, phoneNumber, email, isFavorite, contactType } = req.body;
+    const photo = req.file;
+
+    let photoUrl;
 
     if (!name || !phoneNumber || !contactType) {
         throw createHttpError(400, 'Name, phone number, and contact type are required fields');
@@ -81,7 +87,15 @@ export const updateContactController = async (req, res) => {
         contactType
     };
 
-    const contact = await updateContact(userId, req.params.id, payload);
+    if (photo) { 
+        if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+            photoUrl = await saveFileToCloudinary(photo);
+        } else {
+            photoUrl = await saveFileToUploadDir(photo);
+        }
+    }
+
+    const contact = await updateContact(userId, req.params.id, payload, { photo: photoUrl });
 
     if (!contact) {
         throw createHttpError(404, 'Contact not found');
