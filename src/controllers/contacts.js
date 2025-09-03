@@ -45,6 +45,9 @@ export const getContactByIdController = async (req, res) => {
 
 export const createContactController = async (req, res) => {
     const { name, phoneNumber, email, isFavorite, contactType } = req.body;
+    const photo = req.file;
+
+    let photoUrl;
 
     if(!name || !phoneNumber || !contactType) {
         throw createHttpError(400, 'Name, phone number, and contact type are required fields');
@@ -59,7 +62,15 @@ export const createContactController = async (req, res) => {
         contactType
     };
 
-    const contact = await createContact(userId, payload);
+    if (photo) { 
+        if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+            photoUrl = await saveFileToCloudinary(photo);
+        } else {
+            photoUrl = await saveFileToUploadDir(photo);
+        }
+    }    
+
+    const contact = await createContact(userId, payload, { photo: photoUrl });
 
     res.status(201).json({
         status: 201,
