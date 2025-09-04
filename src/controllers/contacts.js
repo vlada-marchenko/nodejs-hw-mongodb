@@ -70,7 +70,7 @@ export const createContactController = async (req, res) => {
         }
     }    
 
-    const contact = await createContact(userId, payload, { photo: photoUrl });
+    const contact = await createContact(userId, {...payload, photo: photoUrl});
 
     res.status(201).json({
         status: 201,
@@ -106,7 +106,7 @@ export const updateContactController = async (req, res) => {
         }
     }
 
-    const contact = await updateContact(userId, req.params.id, payload, { photo: photoUrl });
+    const contact = await updateContact(userId, req.params.id, {...payload, photo: photoUrl});
 
     if (!contact) {
         throw createHttpError(404, 'Contact not found');
