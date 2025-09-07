@@ -1,0 +1,25 @@
+type: object
+description: A contact object representing a user contact
+required:
+  - name
+  - phoneNumber
+  - contactType
+properties:
+  name:
+    type: string
+    description: Full name of the contact
+  phoneNumber:
+    type: string
+    description: Phone number of the contact
+  email:
+    type: string
+    format: email
+    description: Email address of the contact
+  isFavorite:
+    type: boolean
+    default: false
+    description: Indicates if the contact is marked as favorite
+  contactType:
+    type: string
+    enum: [personal, work, other]
+    description: The type of contact
