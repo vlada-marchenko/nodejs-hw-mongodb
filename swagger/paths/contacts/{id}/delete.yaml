@@ -32,7 +32,6 @@
                 example: 'Successfully deleted contact with id 65e4decdd286b30065d54af9.'
               data:
                 type: object
-                nullable: true
                 example: {}
     '404':
       $ref: '../../../components/responses/404.yaml'
