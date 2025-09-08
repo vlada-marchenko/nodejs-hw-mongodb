@@ -170,7 +170,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/contact"
               }
@@ -297,7 +297,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/contact"
               }
@@ -445,6 +445,11 @@
               "other"
             ],
             "description": "The type of contact"
+          },
+          "photo": {
+            "description": "Contact`s photo",
+            "type": "string",
+            "format": "binary"
           }
         }
       }
@@ -522,6 +527,11 @@
               "other"
             ],
             "description": "The type of contact"
+          },
+          "photo": {
+            "description": "Contact`s photo",
+            "type": "string",
+            "format": "binary"
           }
         }
       }

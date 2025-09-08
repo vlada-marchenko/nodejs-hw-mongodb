@@ -23,3 +23,7 @@ properties:
     type: string
     enum: [personal, work, other]
     description: The type of contact
+  photo: 
+    description: 'Contact`s photo'
+    type: string
+    format: binary
